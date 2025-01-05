@@ -48,3 +48,5 @@ for folder in train_folders:
 np.save('index.npy', bow_descs)
 np.save('paths', img_paths)
 print("Test")
+print("Test")
+print("Test")
