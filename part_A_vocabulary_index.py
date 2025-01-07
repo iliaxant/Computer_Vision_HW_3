@@ -34,7 +34,6 @@ descriptor_extractor = cv.BOWImgDescriptorExtractor(sift, cv.BFMatcher(cv.NORM_L
 descriptor_extractor.setVocabulary(vocabulary)
 
 img_paths = []
-# train_descs = np.zeros((0, 128))
 bow_descs = np.zeros((0, vocabulary.shape[0]))
 for folder in train_folders:
     files = os.listdir(folder)
