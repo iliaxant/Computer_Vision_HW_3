@@ -1,11 +1,6 @@
 from utils import *
 import os
-import cv2 as cv
 import numpy as np
-
-train_folders = ['caltech-101/caltech-101_5_train/accordion', 'caltech-101/caltech-101_5_train/electric_guitar',
-                 'caltech-101/caltech-101_5_train/grand_piano', 'caltech-101/caltech-101_5_train/mandolin',
-                 'caltech-101/caltech-101_5_train/metronome']
 
 test_folders = ['caltech-101/caltech-101_5_test/accordion', 'caltech-101/caltech-101_5_test/electric_guitar',
                 'caltech-101/caltech-101_5_test/grand_piano', 'caltech-101/caltech-101_5_test/mandolin',
@@ -23,27 +18,27 @@ print('Training SVMs...')
 svm_accordion = cv.ml.SVM_create()
 svm_accordion.setType(cv.ml.SVM_C_SVC)
 svm_accordion.setKernel(cv.ml.SVM_LINEAR)
-svm_accordion.setTermCriteria((cv.TERM_CRITERIA_COUNT, 100, 1.e-06))
+svm_accordion.setTermCriteria((cv.TERM_CRITERIA_COUNT, 100, 1.e-06))  # Max iterations and accuracy
 
 svm_electric_guitar = cv.ml.SVM_create()
 svm_electric_guitar.setType(cv.ml.SVM_C_SVC)
 svm_electric_guitar.setKernel(cv.ml.SVM_LINEAR)
-svm_electric_guitar.setTermCriteria((cv.TERM_CRITERIA_COUNT, 100, 1.e-06))
+svm_electric_guitar.setTermCriteria((cv.TERM_CRITERIA_COUNT, 100, 1.e-06))  # Max iterations and accuracy
 
 svm_grand_piano = cv.ml.SVM_create()
 svm_grand_piano.setType(cv.ml.SVM_C_SVC)
 svm_grand_piano.setKernel(cv.ml.SVM_LINEAR)
-svm_grand_piano.setTermCriteria((cv.TERM_CRITERIA_COUNT, 100, 1.e-06))
+svm_grand_piano.setTermCriteria((cv.TERM_CRITERIA_COUNT, 100, 1.e-06))  # Max iterations and accuracy
 
 svm_mandolin = cv.ml.SVM_create()
 svm_mandolin.setType(cv.ml.SVM_C_SVC)
 svm_mandolin.setKernel(cv.ml.SVM_LINEAR)
-svm_mandolin.setTermCriteria((cv.TERM_CRITERIA_COUNT, 100, 1.e-06))
+svm_mandolin.setTermCriteria((cv.TERM_CRITERIA_COUNT, 100, 1.e-06))  # Max iterations and accuracy
 
 svm_metronome = cv.ml.SVM_create()
 svm_metronome.setType(cv.ml.SVM_C_SVC)
 svm_metronome.setKernel(cv.ml.SVM_LINEAR)
-svm_metronome.setTermCriteria((cv.TERM_CRITERIA_COUNT, 100, 1.e-06))
+svm_metronome.setTermCriteria((cv.TERM_CRITERIA_COUNT, 100, 1.e-06))  # Max iterations and accuracy
 
 labels = []
 for p in img_paths:
@@ -101,8 +96,10 @@ svm_metronome.trainAuto(bow_descs, cv.ml.ROW_SAMPLE, labels)
 svm_metronome.save('svm_metronome')
 
 # TESTING
+print('Testing System...')
 vocabulary = np.load('vocabulary.npy')
 
+# Classification
 descriptor_extractor = cv.BOWImgDescriptorExtractor(sift, cv.BFMatcher(cv.NORM_L2SQR))
 descriptor_extractor.setVocabulary(vocabulary)
 
@@ -179,7 +176,6 @@ print()
 print('# # # # Evaluation of SVM One vs All Classification # # # #')
 print()
 
-print()
 print('=== [1] Accordions ===')
 print('- Correctly Classified: %d' % right_accordion)
 print('- Total Accordions: %d' % total_accordion)
@@ -187,7 +183,6 @@ success_rate = right_accordion / total_accordion
 print('- Success Rate: %.3f => %.1f%%' % (success_rate, 100*success_rate))
 print()
 
-print()
 print('=== [2] Electric Guitars ===')
 print('- Correctly Classified: %d' % right_electric_guitar)
 print('- Total Electric Guitars: %d' % total_electric_guitar)
@@ -195,7 +190,6 @@ success_rate = right_electric_guitar / total_electric_guitar
 print('- Success Rate: %.3f => %.1f%%' % (success_rate, 100*success_rate))
 print()
 
-print()
 print('=== [3] Grand Pianos ===')
 print('- Correctly Classified: %d' % right_grand_piano)
 print('- Total Grand Pianos: %d' % total_grand_piano)
@@ -203,7 +197,6 @@ success_rate = right_grand_piano / total_grand_piano
 print('- Success Rate: %.3f => %.1f%%' % (success_rate, 100*success_rate))
 print()
 
-print()
 print('=== [4] Mandolins ===')
 print('- Correctly Classified: %d' % right_mandolin)
 print('- Total Mandolins: %d' % total_mandolin)
@@ -211,7 +204,6 @@ success_rate = right_mandolin / total_mandolin
 print('- Success Rate: %.3f => %.1f%%' % (success_rate, 100*success_rate))
 print()
 
-print()
 print('=== [5] Metronomes ===')
 print('- Correctly Classified: %d' % right_metronome)
 print('- Total Metronomes: %d' % total_metronome)
@@ -219,7 +211,6 @@ success_rate = right_metronome / total_metronome
 print('- Success Rate: %.3f => %.1f%%' % (success_rate, 100*success_rate))
 print()
 
-print()
 print('<<====== Total Accuracy ======>>')
 print('- Correctly Classified: %d' % right)
 print('- Total Objects: %d' % total)
