@@ -216,4 +216,3 @@ print('- Correctly Classified: %d' % right)
 print('- Total Objects: %d' % total)
 success_rate = right / total
 print('- Success Rate: %.3f => %.1f%%' % (success_rate, 100*success_rate))
-print()
