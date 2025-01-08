@@ -15,7 +15,7 @@ img_paths = np.load('paths.npy')
 # Input 1 for OPTIMAL K-VALUE SEARCHING MODE or any other num for SINGULAR TESTING MODE
 mode = 0
 # Input the value of k for the knn in SINGULAR TESTING MODE
-k_sel = 9
+k_sel = 14
 # Input the maximum value of k for the knn in OPTIMAL K-VALUE SEARCHING MODE
 k_max = 50
 

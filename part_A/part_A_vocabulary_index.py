@@ -21,7 +21,7 @@ for folder in train_folders:
 # Create vocabulary
 print('Creating vocabulary...')
 term_crit = (cv.TERM_CRITERIA_EPS, 30, 0.1)  # Maximum number of iterations and desired accuracy
-trainer = cv.BOWKMeansTrainer(50, term_crit, 1, cv.KMEANS_PP_CENTERS)  # 1st parameter = Number of Visual Words
+trainer = cv.BOWKMeansTrainer(100, term_crit, 1, cv.KMEANS_PP_CENTERS)  # 1st parameter = Number of Visual Words
 vocabulary = trainer.cluster(train_descs.astype(np.float32))
 
 np.save('vocabulary.npy', vocabulary)
