@@ -18,6 +18,8 @@ mode = 0
 k_sel = 14
 # Input the maximum value of k for the knn in OPTIMAL K-VALUE SEARCHING MODE
 k_max = 50
+# Input 1 to view classified images in SINGULAR TESTING MODE
+view_imgs = 1
 
 # # # #     END OF USER INPUT     # # # #
 
@@ -105,18 +107,23 @@ else:
 
     right_accordion = 0
     total_accordion = 0
+    accordions = []
 
     right_electric_guitar = 0
     total_electric_guitar = 0
+    electric_guitars = []
 
     right_grand_piano = 0
     total_grand_piano = 0
+    grand_pianos = []
 
     right_mandolin = 0
     total_mandolin = 0
+    mandolins = []
 
     right_metronome = 0
     total_metronome = 0
+    metronomes = []
 
     for folder in test_folders:
         files = os.listdir(folder)
@@ -129,6 +136,18 @@ else:
 
             response, results, neighbours, dist = knn.findNearest(bow_desc, k_sel)
             # 2nd Input Parameter = Value of k in knn
+
+            if view_imgs == 1:
+                if response == 4:
+                    accordions.append(path)
+                elif response == 3:
+                    electric_guitars.append(path)
+                elif response == 2:
+                    grand_pianos.append(path)
+                elif response == 1:
+                    mandolins.append(path)
+                else:
+                    metronomes.append(path)
 
             total += 1
             if path == os.path.join('caltech-101/caltech-101_5_test/accordion', file):
@@ -206,3 +225,55 @@ else:
     print('- Total Objects: %d' % total)
     success_rate = right / total
     print('- Success Rate: %.3f => %.1f%%' % (success_rate, 100 * success_rate))
+
+    if view_imgs == 1:
+
+        sample = cv.imread('caltech-101/caltech-101_5_train/accordion/image_0001.jpg')
+        cv.namedWindow('Sample Accordion', cv.WINDOW_NORMAL)
+        cv.imshow('Sample Accordion', sample)
+        cv.namedWindow('Classified Accordion', cv.WINDOW_NORMAL)
+        for accordion in accordions:
+            item = cv.imread(accordion)
+            cv.imshow('Classified Accordion', item)
+            cv.waitKey(0)
+        cv.destroyAllWindows()
+
+        sample = cv.imread('caltech-101/caltech-101_5_train/electric_guitar/image_0001.jpg')
+        cv.namedWindow('Sample Electric Guitar', cv.WINDOW_NORMAL)
+        cv.imshow('Sample Electric Guitar', sample)
+        cv.namedWindow('Classified Electric Guitar', cv.WINDOW_NORMAL)
+        for electric_guitar in electric_guitars:
+            item = cv.imread(electric_guitar)
+            cv.imshow('Classified Electric Guitar', item)
+            cv.waitKey(0)
+        cv.destroyAllWindows()
+
+        sample = cv.imread('caltech-101/caltech-101_5_train/grand_piano/image_0001.jpg')
+        cv.namedWindow('Sample Grand Piano', cv.WINDOW_NORMAL)
+        cv.imshow('Sample Grand Piano', sample)
+        cv.namedWindow('Classified Grand Piano', cv.WINDOW_NORMAL)
+        for grand_piano in grand_pianos:
+            item = cv.imread(grand_piano)
+            cv.imshow('Classified Grand Piano', item)
+            cv.waitKey(0)
+        cv.destroyAllWindows()
+
+        sample = cv.imread('caltech-101/caltech-101_5_train/mandolin/image_0001.jpg')
+        cv.namedWindow('Sample Mandolin', cv.WINDOW_NORMAL)
+        cv.imshow('Sample Mandolin', sample)
+        cv.namedWindow('Classified Mandolin', cv.WINDOW_NORMAL)
+        for mandolin in mandolins:
+            item = cv.imread(mandolin)
+            cv.imshow('Classified Mandolin', item)
+            cv.waitKey(0)
+        cv.destroyAllWindows()
+
+        sample = cv.imread('caltech-101/caltech-101_5_train/metronome/image_0001.jpg')
+        cv.namedWindow('Sample Metronome', cv.WINDOW_NORMAL)
+        cv.imshow('Sample Metronome', sample)
+        cv.namedWindow('Classified Metronome', cv.WINDOW_NORMAL)
+        for metronome in metronomes:
+            item = cv.imread(metronome)
+            cv.imshow('Classified Metronome', item)
+            cv.waitKey(0)
+        cv.destroyAllWindows()
